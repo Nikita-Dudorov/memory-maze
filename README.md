@@ -46,7 +46,7 @@ Memory Maze allows you to play the levels in human mode. We used this mode for r
 
 ```sh
 # GUI dependencies
-pip install gym pygame pillow imageio
+pip install gymnasium pygame pillow imageio
 
 # Launch with standard 64x64 resolution
 python gui/run_gui.py
@@ -86,7 +86,7 @@ You can create the environment using the [Gym](https://github.com/openai/gym) in
 
 ```python
 !pip install gym
-import gym
+import gymnasium as gym
 
 # Set this if you are getting "Unable to load EGL library" error:
 #  os.environ['MUJOCO_GL'] = 'glfw'  

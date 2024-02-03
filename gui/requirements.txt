@@ -1,4 +1,4 @@
-gym
+gymnasium
 pygame
 pillow
 imageio
