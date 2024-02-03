@@ -2,9 +2,9 @@ from typing import Any, Tuple
 import numpy as np
 
 import dm_env
-import gym
+import gymnasium as gym
 from dm_env import specs
-from gym import spaces
+from gymnasium import spaces
 
 
 class GymWrapper(gym.Env):
