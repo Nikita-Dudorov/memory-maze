@@ -14,20 +14,23 @@ class GymWrapper(gym.Env):
         self.action_space = _convert_to_space(env.action_spec())
         self.observation_space = _convert_to_space(env.observation_spec())
 
-    def reset(self) -> Any:
+    def reset(self, seed=None, options=None) -> Tuple[Any, dict]:
+        # TODO: pass seed on reset
         ts = self.env.reset()
-        return ts.observation
+        info = {}
+        return ts.observation, info
 
-    def step(self, action) -> Tuple[Any, float, bool, dict]:
+    def step(self, action) -> Tuple[Any, float, bool, bool, dict]:
         ts = self.env.step(action)
         assert not ts.first(), "dm_env.step() caused reset, reward will be undefined."
         assert ts.reward is not None
         done = ts.last()
         terminal = ts.last() and ts.discount == 0.0
+        truncated = done and not terminal
         info = {}
-        if done and not terminal:
+        if truncated:
             info['TimeLimit.truncated'] = True  # acme.GymWrapper understands this and converts back to dm_env.truncation()
-        return ts.observation, ts.reward, done, info
+        return ts.observation, ts.reward, done, truncated, info
 
 
 def _convert_to_space(spec: Any) -> gym.Space:
